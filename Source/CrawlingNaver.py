@@ -15,8 +15,10 @@ try:
     chrome_options.add_argument('disable-gpu')
     chrome_options.add_argument('lang=ko_KR')
 
+    # 백그라운드에서 크롬창 실행
     driver = webdriver.Chrome('chromedriver.exe', options=chrome_options)
 
+    # 다음 주소로 이동
     driver.get('https://map.naver.com/v5/search/강남역%20맛집?c=14140183.7974172,4508743.2143150,15,0,0,0,dh')
     delay = 3
     driver.implicitly_wait(delay)
@@ -55,14 +57,17 @@ try:
         # 가게 정보 html 로 전환
         store_info_xpath = driver.find_element_by_xpath('//*[@id="entryIframe"]')
 
+        # 상위 프레임으로 전환 (root frame)
+        driver.switch_to.default_content()
+        driver.switch_to.frame(scroll_frame_xpath)
+
+
         # 크롤링 소스 ~~
+
 
 
         # 크롤링 소스
 
-        # 상위 프레임으로 전환 (root frame)
-        driver.switch_to.default_content()
-        driver.switch_to.frame(scroll_frame_xpath)
 
         # test 하기 위해 상호를 클릭할 때마다 스샷을 찍어 저장함
         driver.get_screenshot_as_file(str(idx) + '.png')
